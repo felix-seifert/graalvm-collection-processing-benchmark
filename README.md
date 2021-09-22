@@ -1,6 +1,6 @@
 # graalvm-collection-processing-benchmark
 
-The two folders [list-processing-streams](list-processing-loops) and [list-processing-streams](list-processing-streams)
+The two folders [list-processing-loops](list-processing-loops) and [list-processing-streams](list-processing-streams)
 provide JMH benchmarks for comparing collection processing (especially list processing) in Java. The collections are
 either processes with loops or streams. The idea is to run these benchmarks in different GraalVM modes and compare the
 performance in between loops and streams and the different GraalVM modes.
