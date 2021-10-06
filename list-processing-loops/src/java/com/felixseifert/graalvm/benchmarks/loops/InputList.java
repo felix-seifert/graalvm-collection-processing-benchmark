@@ -1,4 +1,4 @@
-package com.felixseifert.graalvm.benchmarks;
+package com.felixseifert.graalvm.benchmarks.loops;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.felixseifert.graalvm.benchmarks;
+package com.felixseifert.graalvm.benchmarks.streams;
 
 import java.util.List;
 
