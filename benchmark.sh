@@ -3,27 +3,63 @@
 ROUNDS=10
 RESULTS_FILE=benchmark.csv
 
-LOOPS_DIR=list-processing-loops/target
-LOOPS_NAME=list-processing-benchmark-loops
-LOOPS_JAR="$LOOPS_DIR/$LOOPS_NAME.jar"
-LOOPS_NATIVE="$LOOPS_DIR/$LOOPS_NAME-native"
+BUILD_SCRIPT='build.sh'
 
-STREAMS_DIR=list-processing-streams/target
-STREAMS_NAME=list-processing-benchmark-streams
-STREAMS_JAR="$STREAMS_DIR/$STREAMS_NAME.jar"
-STREAMS_NATIVE="$STREAMS_DIR/$STREAMS_NAME-native"
+LOOPS_DIR='list-processing-loops'
+LOOPS_TARGET_DIR="$LOOPS_DIR/target"
+LOOPS_NAME='list-processing-benchmark-loops'
+LOOPS_JAR="$LOOPS_TARGET_DIR/$LOOPS_NAME.jar"
+LOOPS_NATIVE="$LOOPS_TARGET_DIR/$LOOPS_NAME-native"
 
-NO_PROCESSING_DIR=no-processing/target
-NO_PROCESSING_NAME=no-processing
-NO_PROCESSING_JAR="$NO_PROCESSING_DIR/$NO_PROCESSING_NAME.jar"
-NO_PROCESSING_NATIVE="$NO_PROCESSING_DIR/$NO_PROCESSING_NAME-native"
+STREAMS_DIR='list-processing-streams'
+STREAMS_TARGET_DIR="$STREAMS_DIR/target"
+STREAMS_NAME='list-processing-benchmark-streams'
+STREAMS_JAR="$STREAMS_TARGET_DIR/$STREAMS_NAME.jar"
+STREAMS_NATIVE="$STREAMS_TARGET_DIR/$STREAMS_NAME-native"
 
-prepare_environment() {
-  # Todo: Add check for compiled files
-  if test -f $RESULTS_FILE; then
+NO_PROCESSING_DIR='no-processing'
+NO_PROCESSING_TARGET_DIR="$NO_PROCESSING_DIR/target"
+NO_PROCESSING_NAME='no-processing'
+NO_PROCESSING_JAR="$NO_PROCESSING_TARGET_DIR/$NO_PROCESSING_NAME.jar"
+NO_PROCESSING_NATIVE="$NO_PROCESSING_TARGET_DIR/$NO_PROCESSING_NAME-native"
+
+#
+# Returns 0 if provided file is present and 1 if not
+#
+is_file_present() {
+  test -f "$1"
+}
+
+ensure_presence_of_loops() {
+  if ! is_file_present $LOOPS_JAR || ! is_file_present $LOOPS_NATIVE; then
+    (cd $LOOPS_DIR || exit; ./$BUILD_SCRIPT)
+  fi
+}
+
+ensure_presence_of_streams() {
+  if ! is_file_present $STREAMS_JAR || ! is_file_present $STREAMS_NATIVE; then
+    (cd $STREAMS_DIR || exit; ./$BUILD_SCRIPT)
+  fi
+}
+
+ensure_presence_of_no_processing() {
+  if ! is_file_present $NO_PROCESSING_JAR || ! is_file_present $NO_PROCESSING_NATIVE; then
+    (cd $NO_PROCESSING_DIR || exit; ./$BUILD_SCRIPT)
+  fi
+}
+
+ensure_presence_of_empty_results_file() {
+  if is_file_present $RESULTS_FILE; then
     rm $RESULTS_FILE
   fi
   touch $RESULTS_FILE
+}
+
+prepare_environment() {
+  ensure_presence_of_loops
+  ensure_presence_of_streams
+  ensure_presence_of_no_processing
+  ensure_presence_of_empty_results_file
 }
 
 #
@@ -59,7 +95,7 @@ run_loops_jar_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${LOOPS_JAR_TIMINGS[@]}" | tr ' ' ',')
-  echo "Durations of list processing in JVM mode through loops in nanoseconds,$JOINED_TIMINGS" >> $RESULTS_FILE
+  echo "Durations of list processing in JVM mode through loops in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -72,7 +108,7 @@ run_loops_native_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${LOOPS_NATIVE_TIMINGS[@]}" | tr ' ' ',')
-  echo "Durations of list processing in native mode through loops in nanoseconds,$JOINED_TIMINGS" >> $RESULTS_FILE
+  echo "Durations of list processing in native mode through loops in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -85,7 +121,7 @@ run_stream_jar_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${STREAMS_JAR_TIMINGS[@]}" | tr ' ' ',')
-  echo "Durations of list processing in JVM mode through streams in nanoseconds,$JOINED_TIMINGS" >> $RESULTS_FILE
+  echo "Durations of list processing in JVM mode through streams in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -98,7 +134,7 @@ run_streams_native_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${STREAMS_NATIVE_TIMINGS[@]}" | tr ' ' ',')
-  echo "Durations of list processing in native mode through streams in nanoseconds,$JOINED_TIMINGS" >> $RESULTS_FILE
+  echo "Durations of list processing in native mode through streams in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -111,7 +147,7 @@ run_no_processing_jar_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${NO_PROCESSING_JAR_TIMINGS[@]}" | tr ' ' ',')
-  echo "Durations without processing in JVM mode in nanoseconds,$JOINED_TIMINGS" >> $RESULTS_FILE
+  echo "Durations without processing in JVM mode in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -124,7 +160,7 @@ run_no_processing_native_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${NO_PROCESSING_NATIVE_TIMINGS[@]}" | tr ' ' ',')
-  echo "Durations without processing in native mode in nanoseconds,$JOINED_TIMINGS" >> $RESULTS_FILE
+  echo "Durations without processing in native mode in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
