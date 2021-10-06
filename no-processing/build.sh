@@ -3,17 +3,17 @@
 ROOT_DIR=$(pwd)
 
 JAVA_SRC_DIR=src/java
-ROOT_PACKAGE=com/felixseifert/graalvm/benchmarks/loops
+ROOT_PACKAGE=com/felixseifert/graalvm/benchmarks/no
 
 TARGET_DIR=target
 COMPILED_CLASSES_DIR=$TARGET_DIR/classes
 
-JAR_NAME=list-processing-benchmark-loops
+JAR_NAME=no-processing
 NATIVE_NAME="$JAR_NAME-native"
 
 check_if_correct_directory() {
   CURRENT_DIR=$(echo "$ROOT_DIR" | awk -F"/" '{print $NF}')
-  if [[ $CURRENT_DIR != *"loop"* ]]; then
+  if [[ $CURRENT_DIR != *"no"* ]]; then
     echo 'Script is executed in wrong directory.'
     exit
   fi
