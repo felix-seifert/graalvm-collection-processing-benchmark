@@ -1,4 +1,4 @@
-#! /bin/bash -v
+#! /bin/bash
 
 ROUNDS=10
 RESULTS_FILE=benchmark.csv
