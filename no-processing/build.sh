@@ -20,18 +20,18 @@ check_if_correct_directory() {
 }
 
 compile() {
-  javac -d $COMPILED_CLASSES_DIR $JAVA_SRC_DIR/$ROOT_PACKAGE/*.java
+  "$GRAALVM_HOME/bin/javac" -d $COMPILED_CLASSES_DIR $JAVA_SRC_DIR/$ROOT_PACKAGE/*.java
 }
 
 package_in_jar() {
   cp src/resources/META-INF/MANIFEST.MF $COMPILED_CLASSES_DIR
   cd $COMPILED_CLASSES_DIR || exit
-  jar cfm "$ROOT_DIR/$TARGET_DIR/$JAR_NAME.jar" MANIFEST.MF $ROOT_PACKAGE/*.class
+  "$GRAALVM_HOME/bin/jar" cfm "$ROOT_DIR/$TARGET_DIR/$JAR_NAME.jar" MANIFEST.MF $ROOT_PACKAGE/*.class
   cd "$ROOT_DIR" || exit
 }
 
 compile_native_image() {
-  native-image -jar "$ROOT_DIR/$TARGET_DIR/$JAR_NAME.jar" "$ROOT_DIR/$TARGET_DIR/$NATIVE_NAME" | cat
+  "$GRAALVM_HOME/bin/native-image" -jar "$ROOT_DIR/$TARGET_DIR/$JAR_NAME.jar" "$ROOT_DIR/$TARGET_DIR/$NATIVE_NAME" | cat
 }
 
 check_if_correct_directory
