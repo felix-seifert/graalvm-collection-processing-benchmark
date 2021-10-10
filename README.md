@@ -39,17 +39,26 @@ already happen and executes them as JARs and native binaries. The execution is r
 ./benchmark.sh
 ```
 
-The execution timings will be stored in a `.csv` file. A row comprises a cell with a description of the execution mode
-and is followed by several cells which each include an execution timing of the described mode.
+The execution timings will be stored in a `.csv` file. A row comprises the used form of processing, the execution mode,
+a description of the execution and is followed by several execution timings of the described mode.
 
 ```
-Durations of list processing in JVM mode through loops in nanoseconds,448489212,450392198,451370661,445946157,471229684,451721586,440719189,473921751,468296118,457031957
-Durations of list processing in native mode through loops in nanoseconds,7481069,7089192,5532764,4501771,3886928,3509831,3544814,3509943,3469809,4069187
-Durations of list processing in JVM mode through streams in nanoseconds,420181708,480143271,461680516,464056132,465772250,468489195,480839552,463729502,477066599,456528607
-Durations of list processing in native mode through streams in nanoseconds,6614009,6320993,6387160,6430733,6976682,6356072,6309118,6178219,5133343,4012548
-Durations without processing in JVM mode in nanoseconds,442104481,465377112,446387596,466247921,439630449,452008831,453139540,493972999,452112940,453896817
-Durations without processing in native mode in nanoseconds,7311050,5222034,4633433,5435407,6936241,6446732,5486576,5538380,5413637,5685813
+Processing,Mode,Description,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10
+loops,jvm,Durations of list processing in JVM mode through loops in nanoseconds,456640855,480563969,466274310,457555452,473514995,451377833,465314880,470706899,470199321,476601833
+loops,native,Durations of list processing in native mode through loops in nanoseconds,7979673,7672593,9879840,5475428,5415416,3764797,3834782,5024665,4398057,4784259
+streams,jvm,Durations of list processing in JVM mode through streams in nanoseconds,442252917,486446579,474882802,469567358,486140159,464532595,494910979,490998692,492638200,466492981
+streams,native,Durations of list processing in native mode through streams in nanoseconds,8750754,7709488,8186808,5780086,5315444,4769203,3847299,3968024,4391808,4771771
+no-processing,jvm,Durations without processing in JVM mode in nanoseconds,443549496,473485721,468311970,451413823,479392505,461802326,460117760,471456463,458598231,471726635
+no-processing,native,Durations without processing in native mode in nanoseconds,4145229,5330653,4577214,4098532,3506842,4721917,4417340,3747131,3686842,4774681
 ```
+
+## Generate Graphs
+
+After running the benchmark, you might want to aggregate the benchmarking results and display them in a graph. The graph
+generation can be automated with the Python script in the folder [process-benchmarks](process-benchmarks). The script
+generates two different graphs: One graph show the measured absolute execution duration for the different processing
+forms in different execution modes. The second graph shows how the different execution forms differ from a nearly empty
+application as described in the section [Idea of Benchmark](#idea-of-benchmark).
 
 ## Idea of Benchmark
 
