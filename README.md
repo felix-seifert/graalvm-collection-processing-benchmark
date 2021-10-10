@@ -39,8 +39,8 @@ already happen and executes them as JARs and native binaries. The execution is r
 ./benchmark.sh
 ```
 
-The execution timings will be stored in a `.csv` file. A row comprises the used for of processing, the execution mode, a
-description of the execution and is followed by several execution timings of the described mode.
+The execution timings will be stored in a `.csv` file. A row comprises the used form of processing, the execution mode,
+a description of the execution and is followed by several execution timings of the described mode.
 
 ```
 Processing,Mode,Description,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10
