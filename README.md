@@ -52,6 +52,14 @@ no-processing,jvm,Durations without processing in JVM mode in nanoseconds,443549
 no-processing,native,Durations without processing in native mode in nanoseconds,4145229,5330653,4577214,4098532,3506842,4721917,4417340,3747131,3686842,4774681
 ```
 
+## Generate Graphs
+
+After running the benchmark, you might want to aggregate the benchmarking results and display them in a graph. The graph
+generation can be automated with the Python script in the folder [process-benchmarks](process-benchmarks). The script
+generates two different graphs: One graph show the measured absolute execution duration for the different processing
+forms in different execution modes. The second graph shows how the different execution forms differ from a nearly empty
+application as described in the section [Idea of Benchmark](#idea-of-benchmark).
+
 ## Idea of Benchmark
 
 The two folder [list-processing-loops](list-processing-loops) and [list-processing-streams](list-processing-streams)
