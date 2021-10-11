@@ -4,8 +4,8 @@ import java.util.List;
 
 public class NoProcessingBenchmark {
 
-    private static long processList(final List<Integer> list) {
-        return list.get(0);
+    private static long processList(final Integer list) {
+        return list;
     }
 
     public static void main(String[] args) {
