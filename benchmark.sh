@@ -105,7 +105,7 @@ run_loops_jar_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${LOOPS_JAR_TIMINGS[@]}" | tr ' ' ',')
-  echo "loops,jvm,Durations of list processing in JVM mode through loops in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
+  echo "Loops,JVM,Durations of list processing in JVM mode through loops in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -118,7 +118,7 @@ run_loops_native_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${LOOPS_NATIVE_TIMINGS[@]}" | tr ' ' ',')
-  echo "loops,native,Durations of list processing in native mode through loops in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
+  echo "Loops,Native,Durations of list processing in native mode through loops in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -131,7 +131,7 @@ run_stream_jar_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${STREAMS_JAR_TIMINGS[@]}" | tr ' ' ',')
-  echo "streams,jvm,Durations of list processing in JVM mode through streams in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
+  echo "Streams,JVM,Durations of list processing in JVM mode through streams in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -144,7 +144,7 @@ run_streams_native_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${STREAMS_NATIVE_TIMINGS[@]}" | tr ' ' ',')
-  echo "streams,native,Durations of list processing in native mode through streams in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
+  echo "Streams,Native,Durations of list processing in native mode through streams in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -157,7 +157,7 @@ run_no_processing_jar_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${NO_PROCESSING_JAR_TIMINGS[@]}" | tr ' ' ',')
-  echo "no-processing,jvm,Durations without processing in JVM mode in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
+  echo "No processing,JVM,Durations without processing in JVM mode in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
@@ -170,7 +170,7 @@ run_no_processing_native_benchmark() {
   done
   local JOINED_TIMINGS
   JOINED_TIMINGS=$(echo "${NO_PROCESSING_NATIVE_TIMINGS[@]}" | tr ' ' ',')
-  echo "no-processing,native,Durations without processing in native mode in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
+  echo "No processing,Native,Durations without processing in native mode in nanoseconds,$JOINED_TIMINGS" >>$RESULTS_FILE
   echo "Results added to $RESULTS_FILE"
 }
 
