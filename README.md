@@ -34,9 +34,11 @@ installed. Nevertheless, note that the aforementioned environment variable `$GRA
 
 If the environment variable is set, just run the script `benchmark.sh`. It compiles the different modules if it did not
 already happen and executes them as JARs and native binaries. The execution is repeated and each execution gets timed.
+You can specify the number of executions as the first argument. If you do not specify this, the benchmark executes each
+mode and processing form 10 times.
 
 ```shell
-./benchmark.sh
+./benchmark.sh 100
 ```
 
 The execution timings will be stored in a `.csv` file. A row comprises the used form of processing, the execution mode,

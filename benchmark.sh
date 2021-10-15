@@ -1,6 +1,14 @@
 #! /bin/bash
 
-ROUNDS=10
+if [ $# -lt 1 ]; then
+  ROUNDS=10
+elif ! [ "$1" -eq "$1" ] 2>/dev/null; then
+  echo "Please specify the number of execution rounds in the first argument."
+  exit
+else
+  ROUNDS=$1
+fi
+
 RESULTS_FILE=benchmark.csv
 
 BUILD_SCRIPT='build.sh'
@@ -97,7 +105,7 @@ measure_native_execution() {
 }
 
 run_loops_jar_benchmark() {
-  echo 'Start benchmark of list processing through loops in JVM mode'
+  echo "Start benchmark of $ROUNDS executions of list processing through loops in JVM mode"
   declare -a LOOPS_JAR_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
     measure_jar_execution $LOOPS_JAR DURATION
@@ -110,7 +118,7 @@ run_loops_jar_benchmark() {
 }
 
 run_loops_native_benchmark() {
-  echo 'Start benchmark of list processing through loops in native mode'
+  echo "Start benchmark of $ROUNDS executions of list processing through loops in native mode"
   declare -a LOOPS_NATIVE_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
     measure_native_execution $LOOPS_NATIVE DURATION
@@ -123,7 +131,7 @@ run_loops_native_benchmark() {
 }
 
 run_stream_jar_benchmark() {
-  echo 'Start benchmark of list processing through streams in JVM mode'
+  echo "Start benchmark of $ROUNDS executions of list processing through streams in JVM mode"
   declare -a STREAMS_JAR_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
     measure_jar_execution $STREAMS_JAR DURATION
@@ -136,7 +144,7 @@ run_stream_jar_benchmark() {
 }
 
 run_streams_native_benchmark() {
-  echo 'Start benchmark of list processing through streams in native mode'
+  echo "Start benchmark of $ROUNDS executions of list processing through streams in native mode"
   declare -a STREAMS_NATIVE_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
     measure_native_execution $STREAMS_NATIVE DURATION
@@ -149,7 +157,7 @@ run_streams_native_benchmark() {
 }
 
 run_no_processing_jar_benchmark() {
-  echo 'Start benchmark without processing in JVM mode'
+  echo "Start benchmark of $ROUNDS executions without processing in JVM mode"
   declare -a NO_PROCESSING_JAR_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
     measure_jar_execution $NO_PROCESSING_JAR DURATION
@@ -162,7 +170,7 @@ run_no_processing_jar_benchmark() {
 }
 
 run_no_processing_native_benchmark() {
-  echo 'Start benchmark without processing in native mode'
+  echo "Start benchmark of $ROUNDS executions without processing in native mode"
   declare -a NO_PROCESSING_NATIVE_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
     measure_native_execution $NO_PROCESSING_NATIVE DURATION
