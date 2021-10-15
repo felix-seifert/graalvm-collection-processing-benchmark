@@ -72,15 +72,15 @@ benchmark these applications in different GraalVM modes and compare their perfor
 To reduce the different list processing forms as much as possible to their differences, the execution duration of the
 application which does not perform any list processing can be subtracted from the execution duration of the list
 processing with loops or streams. To reduce the variance between different executions, the executions are repeated and
-their averages should be taken for the benchmark.
+their median values should be taken for the benchmark.
 
 The following schematic calculation tries to explain the approach of the different timings. `d(x)` should be the
 execution duration of `x`.
 
 ```
-d(app_loop) = (d(app_loop_1) + .. + d(app_loop_n)) / n
-d(app_stream) = (d(app_stream_1) + .. + d(app_stream_n)) / n
-d(app_no_proc) = (d(app_no_proc_1) + .. + d(app_no_proc_n)) / n
+d(app_loop) = median([app_loop_1 .. app_loop_n])
+d(app_stream) = median([app_stream_1 .. app_stream_n])
+d(app_no_proc) = median([app_no_proc_1 .. app_no_proc_n])
 
 d(loop) = d(app_loop) - d(app_no_proc)
 d(stream) = d(app_stream) - d(app_no_proc)

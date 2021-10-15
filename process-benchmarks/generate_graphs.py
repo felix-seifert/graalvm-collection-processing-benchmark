@@ -6,8 +6,8 @@ from pandas import DataFrame
 def read_list_processing_df() -> DataFrame:
     df = pd.read_csv('../benchmark.csv', header=0)
     df = df.drop(['Description'], axis=1)
-    df['mean_ns'] = df.mean(axis=1, numeric_only=True)
-    df['mean_ms'] = df['mean_ns'] / 1000000
+    df['median_ns'] = df.median(axis=1, numeric_only=True)
+    df['median_ms'] = df['median_ns'] / 1000000
 
     return df
 
@@ -17,8 +17,8 @@ def get_comparison_df(df: DataFrame):
     no_processing = df.copy().iloc[4:6]
     no_processing_ext = no_processing.append(no_processing)
 
-    list_processing['difference_ns'] = list_processing['mean_ns'] - no_processing_ext['mean_ns'].values
-    list_processing['difference_ms'] = list_processing['difference_ns'] / 1000000
+    list_processing['median_difference_ns'] = list_processing['median_ns'] - no_processing_ext['median_ns'].values
+    list_processing['median_difference_ms'] = list_processing['median_difference_ns'] / 1000000
 
     return list_processing
 
@@ -52,9 +52,11 @@ def create_formatted_graph(df_to_display: DataFrame):
     ax.yaxis.grid(True, color='#EEEEEE')
     ax.set_axisbelow(True)
 
-    # ax.set_xticklabels(ax.get_xticks(), rotation=45)
     for tick in ax.get_xticklabels():
         tick.set_rotation(0)
+
+    ax.xaxis.label.set_fontsize(12)
+    ax.yaxis.label.set_fontsize(12)
 
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -67,22 +69,22 @@ def create_formatted_graph(df_to_display: DataFrame):
 def create_absolute_graph(df_to_display: DataFrame, no_of_execs: int) -> Figure:
     ax = create_formatted_graph(df_to_display)
     ax.set_xlabel('List processing form')
-    ax.set_ylabel('Average duration over {0} executions [ms]'.format(no_of_execs))
+    ax.set_ylabel('Median duration over {0} executions [ms]'.format(no_of_execs))
     return ax.get_figure()
 
 
 def create_comparison_graph(df_to_display: DataFrame, no_of_execs: int) -> Figure:
     ax = create_formatted_graph(df_to_display)
     ax.set_xlabel('List processing form')
-    ax.set_ylabel('Average duration over {0} executions compared to no list processing [ms]'.format(no_of_execs))
+    ax.set_ylabel("Median duration over {0} executions \n compared to no list processing [ms]".format(no_of_execs))
     return ax.get_figure()
 
 
 list_processing_df = read_list_processing_df()
 comparison_df = get_comparison_df(list_processing_df)
 
-absolute_pivot_table = get_pivot_table(list_processing_df, 'mean_ms')
-comparison_pivot_table = get_pivot_table(comparison_df, 'difference_ms')
+absolute_pivot_table = get_pivot_table(list_processing_df, 'median_ms')
+comparison_pivot_table = get_pivot_table(comparison_df, 'median_difference_ms')
 
 execution_columns = list(filter(lambda c: c.startswith('T'), list_processing_df.columns))
 no_of_executions = len(execution_columns)
