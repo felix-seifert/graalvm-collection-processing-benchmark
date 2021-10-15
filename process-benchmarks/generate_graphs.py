@@ -52,10 +52,14 @@ def create_formatted_graph(df_to_display: DataFrame):
     ax.yaxis.grid(True, color='#EEEEEE')
     ax.set_axisbelow(True)
 
+    # ax.set_xticklabels(ax.get_xticks(), rotation=45)
+    for tick in ax.get_xticklabels():
+        tick.set_rotation(0)
+
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
-    ax.spines['bottom'].set_visible(False)
+    ax.spines['bottom'].set_visible(True)
 
     return ax
 

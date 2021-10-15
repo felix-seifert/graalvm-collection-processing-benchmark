@@ -44,30 +44,30 @@ a description of the execution and is followed by several execution timings of t
 
 ```
 Processing,Mode,Description,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10
-loops,jvm,Durations of list processing in JVM mode through loops in nanoseconds,456640855,480563969,466274310,457555452,473514995,451377833,465314880,470706899,470199321,476601833
-loops,native,Durations of list processing in native mode through loops in nanoseconds,7979673,7672593,9879840,5475428,5415416,3764797,3834782,5024665,4398057,4784259
-streams,jvm,Durations of list processing in JVM mode through streams in nanoseconds,442252917,486446579,474882802,469567358,486140159,464532595,494910979,490998692,492638200,466492981
-streams,native,Durations of list processing in native mode through streams in nanoseconds,8750754,7709488,8186808,5780086,5315444,4769203,3847299,3968024,4391808,4771771
-no-processing,jvm,Durations without processing in JVM mode in nanoseconds,443549496,473485721,468311970,451413823,479392505,461802326,460117760,471456463,458598231,471726635
-no-processing,native,Durations without processing in native mode in nanoseconds,4145229,5330653,4577214,4098532,3506842,4721917,4417340,3747131,3686842,4774681
+Loops,JVM,Durations of list processing in JVM mode through loops in nanoseconds,548346161,488445354,467328913,452216192,457825879,485607947,460001081,469433120,453007915,476017979
+Loops,Native,Durations of list processing in native mode through loops in nanoseconds,21883384,7221723,7488429,7132373,7693068,5407403,4696986,5388801,4863087,5750389
+Streams,JVM,Durations of list processing in JVM mode through streams in nanoseconds,465749634,496172396,494853601,469920572,513513433,503009541,512070066,502442097,503881682,511083303
+Streams,Native,Durations of list processing in native mode through streams in nanoseconds,22004712,7668186,5148112,10127384,7185451,7941998,5890849,6090887,6436806,6026572
+No processing,JVM,Durations without processing in JVM mode in nanoseconds,503537348,555238835,539205346,480851815,496739958,544496174,481078617,478547335,472112515,474704626
+No processing,Native,Durations without processing in native mode in nanoseconds,21762677,7448068,8295145,7261507,8784889,6754219,5853263,4090931,4015362,3708235
 ```
 
 ## Generate Graphs
 
 After running the benchmark, you might want to aggregate the benchmarking results and display them in a graph. The graph
 generation can be automated with the Python script in the folder [process-benchmarks](process-benchmarks). The script
-generates two different graphs: One graph show the measured absolute execution duration for the different processing
+generates two different graphs: One graph shows the measured absolute execution duration for the different processing
 forms in different execution modes. The second graph shows how the different execution forms differ from a nearly empty
 application as described in the section [Idea of Benchmark](#idea-of-benchmark).
 
 ## Idea of Benchmark
 
-The two folder [list-processing-loops](list-processing-loops) and [list-processing-streams](list-processing-streams)
-each contain an application which processes a list respectively with loops or streams. The third
-folder [no-processing](no-processing) contains an application which prints out the single value of a list. The idea is
-to benchmark these applications in different GraalVM modes and compare their performance.
+The two folders [list-processing-loops](list-processing-loops) and [list-processing-streams](list-processing-streams)
+each contain an application which processes a list with loops or streams respectively. The third folder
+[no-processing](no-processing) contains an application which prints out the single value of a list. The idea is to
+benchmark these applications in different GraalVM modes and compare their performance.
 
-To reduce the different list processing as much as possible to their differences, the execution duration of the
+To reduce the different list processing forms as much as possible to their differences, the execution duration of the
 application which does not perform any list processing can be subtracted from the execution duration of the list
 processing with loops or streams. To reduce the variance between different executions, the executions are repeated and
 their averages should be taken for the benchmark.
@@ -86,4 +86,4 @@ d(stream) = d(app_stream) - d(app_no_proc)
 
 As the different timings should be compared between JVM mode and native mode, the depicted benchmarking steps would have
 to be repeated for the `.jar` files and the native binaries. Executing the script `benchmark.sh` measures all the needed
-timings and stores them for further processing in a `.csv`.
+timings and stores them for further processing in a `.csv` file.
