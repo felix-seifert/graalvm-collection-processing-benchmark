@@ -5,7 +5,8 @@ This project serves to benchmark list processing with streams and loops in Graal
 ## Prerequisites
 
 As this project benchmarks the performance of Java code compiled by GraalVM, it is needed to have **GraalVM** and
-GraalVM's **`native-image` functionality**.
+GraalVM's **`native-image` functionality**. The benchmark is written in Bash and therefore requires a machine which can
+execute Bash scripts.
 
 1. [Download GraalVM](https://www.graalvm.org/downloads/), unzip the archive to a desired location, export the GraalVM
    home directory as `$GRAALVM_HOME`, and add `$GRAALVM_HOME/bin` to the `PATH` environment variable.
@@ -54,13 +55,13 @@ No processing,JVM,Durations without processing in JVM mode in nanoseconds,503537
 No processing,Native,Durations without processing in native mode in nanoseconds,21762677,7448068,8295145,7261507,8784889,6754219,5853263,4090931,4015362,3708235
 ```
 
-## Generate Graphs
+## Process Benchmark
 
-After running the benchmark, you might want to aggregate the benchmarking results and display them in a graph. The graph
-generation can be automated with the Python script in the folder [process-benchmarks](process-benchmarks). The script
-generates two different graphs: One graph shows the measured absolute execution duration for the different processing
-forms in different execution modes. The second graph shows how the different execution forms differ from a nearly empty
-application as described in the section [Idea of Benchmark](#idea-of-benchmark).
+After running the benchmark, you might want to aggregate the benchmarking results to get some insights. A Python script
+in the folder [process-benchmarks](process-benchmarks) automates the generation of graphs and a LaTeX table with the
+statistical values. One generated graph shows the median of the measured execution durations for the different
+processing forms in different execution modes. The second generated graph shows how the different execution forms differ
+from a nearly empty application as described in the section [Idea of Benchmark](#idea-of-benchmark).
 
 ## Idea of Benchmark
 

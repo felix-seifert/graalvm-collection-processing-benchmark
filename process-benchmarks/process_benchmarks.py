@@ -72,6 +72,8 @@ def create_formatted_graph(df_to_display: DataFrame):
     ax.spines['left'].set_visible(False)
     ax.spines['bottom'].set_visible(True)
 
+    # ax.set_ylim([0, 500])
+
     return ax
 
 
