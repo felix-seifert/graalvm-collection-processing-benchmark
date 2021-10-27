@@ -81,34 +81,32 @@ prepare_environment() {
 }
 
 #
-# Executes given jar and puts execution duration into given variable
+# Executes given jar and prints execution duration
 #
 measure_jar_execution() {
   local _JAR=$1
-  local _DURATION=$2
   START=$(date +%s%N)
   java -jar "$_JAR" >/dev/null
   END=$(date +%s%N)
-  eval "$_DURATION=$((END - START))"
+  echo $((END - START))
 }
 
 #
-# Executes given binary and puts execution duration into given variable
+# Executes given binary and prints execution duration
 #
 measure_native_execution() {
   local _NATIVE=$1
-  local _DURATION=$2
   START=$(date +%s%N)
   "./$_NATIVE" >/dev/null
   END=$(date +%s%N)
-  eval "$_DURATION=$((END - START))"
+  echo $((END - START))
 }
 
 run_loops_jar_benchmark() {
   echo "Start benchmark of $ROUNDS executions of list processing through loops in JVM mode"
   declare -a LOOPS_JAR_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
-    measure_jar_execution $LOOPS_JAR DURATION
+    DURATION=$(measure_jar_execution $LOOPS_JAR)
     LOOPS_JAR_TIMINGS+=("$DURATION")
   done
   local JOINED_TIMINGS
@@ -121,7 +119,7 @@ run_loops_native_benchmark() {
   echo "Start benchmark of $ROUNDS executions of list processing through loops in native mode"
   declare -a LOOPS_NATIVE_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
-    measure_native_execution $LOOPS_NATIVE DURATION
+    DURATION=$(measure_native_execution $LOOPS_NATIVE)
     LOOPS_NATIVE_TIMINGS+=("$DURATION")
   done
   local JOINED_TIMINGS
@@ -134,7 +132,7 @@ run_stream_jar_benchmark() {
   echo "Start benchmark of $ROUNDS executions of list processing through streams in JVM mode"
   declare -a STREAMS_JAR_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
-    measure_jar_execution $STREAMS_JAR DURATION
+    DURATION=$(measure_jar_execution $STREAMS_JAR)
     STREAMS_JAR_TIMINGS+=("$DURATION")
   done
   local JOINED_TIMINGS
@@ -147,7 +145,7 @@ run_streams_native_benchmark() {
   echo "Start benchmark of $ROUNDS executions of list processing through streams in native mode"
   declare -a STREAMS_NATIVE_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
-    measure_native_execution $STREAMS_NATIVE DURATION
+    DURATION=$(measure_native_execution $STREAMS_NATIVE)
     STREAMS_NATIVE_TIMINGS+=("$DURATION")
   done
   local JOINED_TIMINGS
@@ -160,7 +158,7 @@ run_no_processing_jar_benchmark() {
   echo "Start benchmark of $ROUNDS executions without processing in JVM mode"
   declare -a NO_PROCESSING_JAR_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
-    measure_jar_execution $NO_PROCESSING_JAR DURATION
+    DURATION=$(measure_jar_execution $NO_PROCESSING_JAR)
     NO_PROCESSING_JAR_TIMINGS+=("$DURATION")
   done
   local JOINED_TIMINGS
@@ -173,7 +171,7 @@ run_no_processing_native_benchmark() {
   echo "Start benchmark of $ROUNDS executions without processing in native mode"
   declare -a NO_PROCESSING_NATIVE_TIMINGS
   for ((i = 0; i < ROUNDS; i++)); do
-    measure_native_execution $NO_PROCESSING_NATIVE DURATION
+    DURATION=$(measure_native_execution $NO_PROCESSING_NATIVE)
     NO_PROCESSING_NATIVE_TIMINGS+=("$DURATION")
   done
   local JOINED_TIMINGS
