@@ -87,7 +87,7 @@ measure_jar_execution() {
   local _JAR=$1
   local _DURATION=$2
   START=$(date +%s%N)
-  java -jar "$_JAR"
+  java -jar "$_JAR" >/dev/null
   END=$(date +%s%N)
   eval "$_DURATION=$((END - START))"
 }
@@ -99,7 +99,7 @@ measure_native_execution() {
   local _NATIVE=$1
   local _DURATION=$2
   START=$(date +%s%N)
-  "./$_NATIVE"
+  "./$_NATIVE" >/dev/null
   END=$(date +%s%N)
   eval "$_DURATION=$((END - START))"
 }
