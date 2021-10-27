@@ -180,10 +180,21 @@ run_no_processing_native_benchmark() {
   echo "Results added to $RESULTS_FILE"
 }
 
+START_WHOLE=$(date +%s%N)
 prepare_environment
+START_BENCHMARK=$(date +%s%N)
 run_loops_jar_benchmark
 run_loops_native_benchmark
 run_stream_jar_benchmark
 run_streams_native_benchmark
 run_no_processing_jar_benchmark
 run_no_processing_native_benchmark
+END_WHOLE=$(date +%s%N)
+
+DURATION_WHOLE_NS=$((END_WHOLE - START_WHOLE))
+DURATION_WHOLE_S=$((DURATION_WHOLE_NS/1000000000))
+DURATION_BENCHMARK_NS=$((END_WHOLE - START_BENCHMARK))
+DURATION_BENCHMARK_S=$((DURATION_BENCHMARK_NS/1000000000))
+
+echo "The whole benchmarking process (incl. builds) lasted $DURATION_WHOLE_S seconds"
+echo "The execution of the benchmarked applications lasted $DURATION_BENCHMARK_S seconds"
