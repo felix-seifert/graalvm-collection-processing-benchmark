@@ -91,6 +91,11 @@ def create_comparison_graph(df_to_display: DataFrame, no_of_execs: int) -> Figur
     return ax.get_figure()
 
 
+def get_no_of_executions(df: DataFrame):
+    execution_columns = list(filter(lambda c: c.startswith('T'), df.columns))
+    return len(execution_columns)
+
+
 def save_latex_table(df_to_save: DataFrame):
     df_to_save = df_to_save.set_index(['Processing', 'Mode'])
     df_to_save = df_to_save.round(2)
@@ -106,8 +111,7 @@ save_latex_table(statistics_df)
 absolute_pivot_table = get_pivot_table(statistics_df, 'median')
 comparison_pivot_table = get_pivot_table(comparison_df, 'median_difference')
 
-execution_columns = list(filter(lambda c: c.startswith('T'), list_processing_df.columns))
-no_of_executions = len(execution_columns)
+no_of_executions = get_no_of_executions(list_processing_df)
 
 create_absolute_graph(absolute_pivot_table, no_of_executions) \
     .savefig('absolute-graph.png', transparent=True)
