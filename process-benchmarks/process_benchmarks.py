@@ -72,22 +72,44 @@ def create_formatted_graph(df_to_display: DataFrame):
     ax.spines['left'].set_visible(False)
     ax.spines['bottom'].set_visible(True)
 
-    # ax.set_ylim([0, 500])
-
     return ax
 
 
 def create_absolute_graph(df_to_display: DataFrame, no_of_execs: int) -> Figure:
     ax = create_formatted_graph(df_to_display)
     ax.set_xlabel('List processing form')
-    ax.set_ylabel('Median duration over {0} executions [ms]'.format(no_of_execs))
+    ax.set_ylabel('Median duration over {0} executions [ms]'
+                  .format(no_of_execs))
+    ax.set_ylim([0, 500])
+    return ax.get_figure()
+
+
+def create_absolute_graph_log(df_to_display: DataFrame, no_of_execs: int) -> Figure:
+    ax = create_formatted_graph(df_to_display)
+    ax.set_xlabel('List processing form')
+    ax.set_ylabel("Median duration on logarithmic scale "
+                  "\n over {0} executions [ms]"
+                  .format(no_of_execs))
+    ax.set_yscale('log')
     return ax.get_figure()
 
 
 def create_comparison_graph(df_to_display: DataFrame, no_of_execs: int) -> Figure:
     ax = create_formatted_graph(df_to_display)
     ax.set_xlabel('List processing form')
-    ax.set_ylabel("Median duration difference over {0} executions \n when compared to no list processing [ms]".format(no_of_execs))
+    ax.set_ylabel("Median duration difference over {0} executions "
+                  "\n when compared to no list processing [ms]"
+                  .format(no_of_execs))
+    return ax.get_figure()
+
+
+def create_comparison_graph_log(df_to_display: DataFrame, no_of_execs: int) -> Figure:
+    ax = create_formatted_graph(df_to_display)
+    ax.set_xlabel('List processing form')
+    ax.set_ylabel("Median duration difference on logarithmic scale "
+                  "\n over {0} executions when compared to no list processing [ms]"
+                  .format(no_of_execs))
+    ax.set_yscale('log')
     return ax.get_figure()
 
 
@@ -115,5 +137,9 @@ no_of_executions = get_no_of_executions(list_processing_df)
 
 create_absolute_graph(absolute_pivot_table, no_of_executions) \
     .savefig('absolute-graph.png', transparent=True)
+create_absolute_graph_log(absolute_pivot_table, no_of_executions) \
+    .savefig('absolute-graph-log.png', transparent=True)
 create_comparison_graph(comparison_pivot_table, no_of_executions) \
     .savefig('comparison-graph.png', transparent=True)
+create_comparison_graph_log(comparison_pivot_table, no_of_executions) \
+    .savefig('comparison-graph-log.png', transparent=True)
